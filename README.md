@@ -16,7 +16,9 @@
 
 打开cmd命令行
 cd到工作目录，例如E:\Workspace\phpStudy\PHPTutorial\WWW
+
 composer create-project topthink/think cms
+
 之后就会创建E:\Workspace\phpStudy\PHPTutorial\WWW\cms 这个目录到，TP5也会安装到里面
 
 引入需要使用的扩展包
