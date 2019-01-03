@@ -1,0 +1,185 @@
+{include file='common/meta'}
+<title>添加股票 - 交易管理</title>
+</head>
+<body>
+<article class="page-container">
+	<form class="form form-horizontal" id="form-admin-add">
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>股票编号：</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<input {if condition='!empty($info) eq true'}disabled{/if} type="text" class="input-text" value="{if condition='!empty($info) eq true'}{$info.instrument_id}{/if}" placeholder="" id="instrument_id" name="instrument_id">
+		</div>
+	</div>
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>市场：</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<input type="text" class="input-text" autocomplete="off" value="{if condition='!empty($info) eq true'}{$info.market}{/if}" placeholder="市场" id="market"  name="market">
+		</div>
+	</div>
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>名称：</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<input type="text" class="input-text" autocomplete="off"  placeholder="名称" value="{if condition='!empty($info) eq true'}{$info.name}{/if}" id="name" name="name">
+		</div>
+	</div>
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>中文名称：</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<input type="text" class="input-text" autocomplete="off"  placeholder="中文名称" value="{if condition='!empty($info) eq true'}{$info.chinese_name}{/if}" id="chinese_name" name="chinese_name">
+		</div>
+	</div>
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>是否启用：</label>
+		<div class="formControls col-xs-8 col-sm-9 skin-minimal">
+			<div class="radio-box">
+				<input name="status" type="radio" {if condition='(!empty($info) eq true) and $info.status eq 1'}checked{/if} value="1" id="sex-1" >
+				<label for="sex-1">是</label>
+			</div>
+			<div class="radio-box">
+				<input type="radio" id="sex-2" name="status" {if condition='(!empty($info) eq true) and $info.status eq 2'}checked{/if} value="2">
+				<label for="sex-2">否</label>
+			</div>
+		</div>
+	</div>
+
+	<!--<div class="row cl">-->
+		<!--<label class="form-label col-xs-4 col-sm-3">角色：</label>-->
+		<!--<div class="formControls col-xs-8 col-sm-9"> <span class="select-box" style="width:150px;">-->
+			<!--<select class="select" name="adminRole" size="1" id="adminRole">-->
+				<!--{if condition='!empty($data) eq true'}-->
+				<!--{volist name='data' id='vo' }-->
+				<!--<option value="{$vo.id}" {if condition='(!empty($info) eq true) and $vo.id eq $info.id'}selected{/if} >{$vo.name}</option>-->
+				<!--{/volist}-->
+				<!--{/if}-->
+			<!--</select>-->
+			<!--</span> </div>-->
+	<!--</div>-->
+
+
+	<!-- <div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3">备注：</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<textarea name="" cols="" rows="" class="textarea"  placeholder="说点什么...100个字符以内" dragonfly="true" onKeyUp="$.Huitextarealength(this,100)"></textarea>
+			<p class="textarea-numberbar"><em class="textarea-length">0</em>/100</p>
+		</div>
+	</div> -->
+	<div class="row cl">
+		<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+			<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;" onclick="check()">
+			<input type="hidden" id="tmp_url" value="{if condition='empty($info) eq true'}{:url('admin/Trading/addInstrument')}{else}{:url('admin/Trading/updateInstrument',array('id'=>$info.id))}{/if}">
+		</div>
+	</div>
+	</form>
+</article>
+
+{include file='common/footer'}
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__STATIC__/lib/jquery.validation/1.14.0/jquery.validate.js"></script> 
+<script type="text/javascript" src="__STATIC__/lib/jquery.validation/1.14.0/validate-methods.js"></script> 
+<script type="text/javascript" src="__STATIC__/lib/jquery.validation/1.14.0/messages_zh.js"></script> 
+<script type="text/javascript">
+$(function(){
+	$('.skin-minimal input').iCheck({
+		checkboxClass: 'icheckbox-blue',
+		radioClass: 'iradio-blue',
+		increaseArea: '20%'
+	});
+	
+	$("#form-admin-add").validate({
+		rules:{
+			instrument_id:{
+				required:true,
+				minlength:4,
+				maxlength:16
+			},
+			market:{
+				required:true,
+			},
+			name:{
+				required:true,
+			},
+            chinese_name:{
+                required:true,
+            },
+			status:{
+				required:true,
+			},
+			// adminRole:{
+			// 	required:true,
+			// },
+		},
+		onkeyup:false,
+		focusCleanup:true,
+		success:"valid",
+		submitHandler:function(form){
+			// $(form).ajaxSubmit({
+			// 	type: 'post',
+			// 	url: "xxxxxxx" ,
+			// 	success: function(data){
+			// 		layer.msg('添加成功!',{icon:1,time:1000});
+			// 	},
+   //              error: function(XmlHttpRequest, textStatus, errorThrown){
+			// 		layer.msg('error!',{icon:1,time:1000});
+			// 	}
+			// });
+			// var index = parent.layer.getFrameIndex(window.name);
+			// parent.$('.btn-refresh').click();
+			// parent.layer.close(index);
+		}
+	});
+});
+
+
+function check(){
+	var instrument_id = $.trim($('#instrument_id').val());
+	var market = $.trim($('#market').val());
+	var name = $.trim($('#name').val());
+	var chinese_name = $.trim($('#chinese_name').val());
+	var status = $('input[name=status]:checked').val();
+	// var role_id = $('#adminRole').val();
+	// if (admin_name==''||email==''||phone==''||password=='') {
+    if (instrument_id==''||market==''||name==''||chinese_name=='') {
+	// alert('请填写完整信息');
+		layer.msg('请填写信息',{icon:2,time:2000});
+		return false;
+	}
+	// var reg = /^[\u4E00-\u9FA5]{1,5}$/;
+	// if(!reg.test(admin_name)) {
+	//     // alert("名称只支持中文字符");
+	//     layer.msg('名称只支持中文字符',{icon:2,time:2000});
+	//     return false;
+	// }
+	var tmp_url = $('#tmp_url').val();
+	if (tmp_url=='') {
+		// alert('未知错误');
+		layer.msg('未知错误',{icon:2,time:2000});
+		return false;
+	}
+	$.post(
+		tmp_url,
+		// {name:admin_name,email:email,phone:phone,password:password,status:status,role_id:role_id},
+        {instrument_id:instrument_id,market:market,name:name,chinese_name:chinese_name,status:status},
+		function (dat){
+			var data = JSON.parse(dat);
+			var msgs = data.msg;
+	        if(data.status == 1){
+	        	layer.msg(msgs, {
+				  icon: 1,
+				  time: 2000 //2秒关闭（如果不配置，默认是3秒）
+				}, function(){
+				  	var index = parent.layer.getFrameIndex(window.name);
+					parent.$('.btn-refresh').click();
+					window.parent.location.reload();
+					parent.layer.close(index);
+				}); 
+	        }else{
+	            layer.msg(msgs,{icon:2,time:2000});
+	        }
+		}); 
+	
+}
+</script> 
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>
