@@ -20,9 +20,13 @@ composer create-project topthink/think cms
 之后就会创建E:\Workspace\phpStudy\PHPTutorial\WWW\cms 这个目录到，TP5也会安装到里面
 
 引入需要使用的扩展包
+
 composer require topthink/think-captcha 1.*
+
 composer require phpmailer/phpmailer
+
 composer install thinkphp-queue
+
 
 下载完框架后，把Git的文件覆盖进去就可以了。
 
