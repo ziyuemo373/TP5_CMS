@@ -1,0 +1,27 @@
+.goods-img-container{
+    width: 40%;
+    height: 200px;
+    border: 2px solid #C0C0C0;
+    float: left;
+    margin-left: 10px;
+}
+.goods-img {
+    width: 100%;
+    height: 167px;
+    border-bottom: 2px solid #C0C0C0;
+}
+.goods-img img{
+    max-width: 100%;
+    max-height: 160px;
+}
+.goods-remove-btn{
+    text-align:center;
+}
+.goods-remove-btn input{
+    width: 100%;
+    color: #FFFFFF;
+    background-color: #C0C0C0;
+}
+.goods-remove-btn input:hover{
+    background-color: red;
+}
